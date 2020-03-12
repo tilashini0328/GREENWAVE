@@ -28,6 +28,7 @@ background-image: url(loginImage.jpeg);
     <link rel="stylesheet" href="css/animate.css">
     <link rel="stylesheet" href="css/slicknav.css">
     <link rel="stylesheet" href="css/style.css">
+	
     <!-- <link rel="stylesheet" href="css/responsive.css"> -->
 <!--===============================================================================================-->	
 	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
@@ -47,11 +48,15 @@ background-image: url(loginImage.jpeg);
 	<link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="css/util.css">
-	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<link rel="stylesheet" type="text/css" href="main.css">
 <!--===============================================================================================-->
 </head>
 <style>
-background-image : loginImage.jpeg;
+body{background-image : url('loginImage.jpg');
+background-size : 100% ;
+
+
+}
 </style>
 
 
@@ -72,16 +77,11 @@ background-image : loginImage.jpeg;
                             <div class="main-menu">
                                 <nav>
                                     <ul id="navigation">
-                                        <li><a href="index.php">home</a></li>
+                                        <li><a href="index.php">Home</a></li>
                                        
-                                        <li><a href="#">Material Types<i class="ti-angle-down"></i></a>
-										<li><a href="#">View Submission<i class="ti-angle-down"></i></a>
-                                            <ul class="submenu">
-                                                <li><a href="blog.html">blog</a></li>
-                                                <li><a href="single-blog.html">single-blog</a></li>
-                                            </ul>
+                                            
                                         </li>
-                                        <li><a href="contact.html">Contact</a></li>
+                                        
                                     </ul>
                                 </nav>
                                 <div class="Appointment">
@@ -112,8 +112,8 @@ background-image : loginImage.jpeg;
 	<br>
 	
 	<div class="limiter">
-		<div class="container-login100">
-			<div class="wrap-login100 login-left">
+		<div class="container-login100" align="center">
+			<div class="wrap-login100">
 				<form class="login100-form validate-form p-l-55 p-r-55 p-t-178"  method = "post" action="validation.php">
 					<span class="login100-form-title">
 						Login
@@ -130,15 +130,7 @@ background-image : loginImage.jpeg;
 						<span class="focus-input100"></span>
 					</div>
 					
-					<div class="text-right p-t-13 p-b-23">
-						<span class="txt1">
-							Forgot
-						</span>
-
-						<a href="#" class="txt2">
-							Username / Password?
-						</a>
-					</div>
+					
 
 					<div class="container-login100-form-btn">
 						<button class="login100-form-btn" type="login" value="login">
@@ -161,28 +153,28 @@ background-image : loginImage.jpeg;
 
 		
 		<div class="container-login100">
-			<div class="wrap-login100 login-left">
+			<div class="wrap-login100 ">
 				<form class="login100-form validate-form p-l-55 p-r-55 p-t-178"  method = "post" action="register1.php">
 					<span class="login100-form-title">
 						Sign Up 
 					</span>
 					  <div class="wrap-input100 validate-input m-b-16" data-validate="Please enter username">
-						<input class="input100" type="text" name="username" placeholder="username">
+						<input class="input100" type="text" name="username" placeholder="username" required>
 						<span class="focus-input100"></span>
 					</div>
 					
 					<div class="wrap-input100 validate-input" data-validate = "Please enter password">
-						<input class="input100" type="password" name="password" placeholder="password">
+						<input class="input100" type="password" name="password" placeholder="password" required>
 						<span class="focus-input100"></span>
 					</div><br>
 
 					<div class="wrap-input100 validate-input m-b-16" data-validate="Please enter fullname">
-						<input class="input100" type="text" name="fullname" placeholder="fullname">
+						<input class="input100" type="text" name="fullname" placeholder="fullname" required>
 						<span class="focus-input100"></span>
 					</div>
 					
 					<div class="wrap-input100 validate-input m-b-16" data-validate="Please enter address">
-						<input class="input100" type="text" name="address" placeholder="address">
+						<input class="input100" type="text" name="address" placeholder="address" required>
 						<span class="focus-input100"></span>
 					</div>
 					<p>UserType</p>

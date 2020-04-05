@@ -5,21 +5,36 @@ if (isset($_POST['materialID'])){
     $_SESSION['selectMID'] = $_POST['materialID'];
 }
 
-
 $user = $_SESSION['user'];
 
 include 'connection.php';
-if (isset($_GET['username']))
+
+
+	if (isset($_GET['user']))
 {
-$user = $_GET['username'];
-$get_user = $mysqli->query("SELECT * FROM user WHERE username = '$user', userType = 'collector'");
+$user = $_GET['user'];
+$get_user = $mysqli->query("SELECT * FROM user WHERE username = '$user'");
 if ($get_user->num_rows == 1)
 {
     $profile_data = $get_user->fetch_assoc();
            
-}
+
        
+
+	  
+
+				
+				
+			
+			
 }
+}
+
+
+
+
+
+
 
 ?> 
 <head>
@@ -46,10 +61,13 @@ if ($get_user->num_rows == 1)
     <link rel="stylesheet" href="css/slicknav.css">
     <link rel="stylesheet" href="css/style.css">
     <!-- <link rel="stylesheet" href="css/responsive.css"> -->
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="main.css">
 </head>
 <style>
-.bg{
-    background-image: url("home.jpeg");
+.bg{ 
+ background-image: url("appointment.jpg");
+ height : auto;
 }
 </style>
 <body>
@@ -124,51 +142,57 @@ if ($get_user->num_rows == 1)
 	    $result = $mysqli->query("SELECT * FROM user WHERE username = '$user' ") or die($mysqli->error);
     ?>
 
-			    
-        <form id="submission" method="POST" >
+		<div class="limiter ">
+		<div class="container-login100 bg" align="center">
+			<div class="wrap-login100">	 			
+        <form id="submission" method="POST" class="login100-form validate-form p-l-55 p-r-55 p-t-178">
         <?php while($row = $result->fetch_assoc()){
 									$collector   = $_SESSION['user'];
 							        $materialID  = $row["materialID"];
 							       
 			
 			?>
-            
-            
-            <div class="col-md-4">
+            <span class="login100-form-title">
+						MAKE APPOINTMENT
+					</span>
+               
+           <div class="wrap-input100 validate-input m-b-16">
             <label class="username">Collector Username</label>
             <input type="text" class="form-control"  name="username" placeholder="username" required value="<?php echo $_SESSION['user']; ?>"disabled></input>
             </div>
             <br>
-            <div class="col-md-4">
+          <div class="wrap-input100 validate-input m-b-16">
             <label class="daysOfWeek">Days of Week</label>
             <input type="text" class="form-control"  name="schedule" placeholder="Days of Week" required value="<?php echo $row['schedule']; ?>" disabled></input>
             </div>
             <br>
-            <div class="col-md-4">
+           <div class="wrap-input100 validate-input m-b-16">
             <label class="timefrom">Time From</label>
             <input type="text" class="form-control"  name="timefrom" placeholder="Time From" required value="<?php echo $row['timeFrom']; ?>" disabled></input>
             </div>
             <br>
-            <div class="col-md-4">
+           <div class="wrap-input100 validate-input m-b-16">
             <label class="timeto">Time To</label>
             <input type="text" class="form-control"  name="timeto" placeholder="Time To" required value="<?php echo $row['timeTo']; ?>" disabled></input>
             </div>
             <br>
-			<div class="col-md-4">
+			<div class="wrap-input100 validate-input m-b-16">
             <label class="timeto">MaterialID</label>
             <input type="text" class="form-control"  name="materialID" placeholder="Time To" required value="<?php echo $row['materialID']; ?>" disabled></input>
             </div>
 			<br>
-            <div class="col-md-4">
+           <div class="wrap-input100 validate-input m-b-16">
             <label class="timeto">Proposed Date</label>
             <input type="date" class="form-control" id="ProposedDate"  name="proposedDate" placeholder="Proposed Date" required ></input>
             </div>
+			
             <br>
             <input class="btn btn-sm btn-primary" type="submit" value="Submit" name="submit">
 			
             <br>
 			<label>
 						  <input type="hidden" name="recycler" value="<?php echo $_SESSION['username']; ?>">
+						  <input type="hidden" name="pointsAwarded">
 						  
 					</label><br><br>
         
@@ -180,7 +204,7 @@ if ($get_user->num_rows == 1)
 							
 
 						$sql = " INSERT INTO submission (submissionID, materialID,recycler, collector, proposedDate, actualDate, weightInKg, pointsAwarded, status)
-							VALUES ('','$materialID','" . $_POST["recycler"] . "','$collector','" . $_POST["proposedDate"] . "','','', '','proposed' )";
+							VALUES ('','$materialID','" . $_POST["recycler"] . "','$collector','" . $_POST["proposedDate"] . "','','', '" . $_POST["pointsAwarded"] . "','proposed' )";
 
 							if ($mysqli->query($sql) === TRUE) {
 							    echo "<script>alert('Your booking has been accepted!');</script>";
@@ -194,7 +218,9 @@ if ($get_user->num_rows == 1)
 					<?php }?>
         </form>
 	
-	
+	</div>
+	</div>
+	</div>
 		</div>
 				<!-- 	booking info-->
 				
@@ -204,38 +230,7 @@ if ($get_user->num_rows == 1)
 				<!-- confirming booking -->
 
 	</div><!--  containerFluid Ends -->
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
+
 <!-- footer_start  -->
     <footer class="footer">
         <div class="footer_top">

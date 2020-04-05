@@ -1,11 +1,32 @@
-<?php if(!isset($_SESSION)){
-	session_start();
-	
-	}  
-	
-?>
+<?php 
 
 
+session_start();
+if (isset($_POST['materialID'])){
+    $_SESSION['user'] = $_POST['username'];
+    $_SESSION['selectMID'] = $_POST['materialID'];
+}
+
+
+$user = $_SESSION['username'];
+
+include 'connection.php';
+if (isset($_GET['username']))
+{
+$user = $_GET['username'];
+$get_user = $mysqli->query("SELECT * FROM submission WHERE username = '$user'");
+if ($get_user->num_rows == 1)
+{
+    $profile_data = $get_user->fetch_assoc();
+	
+							
+						
+						
+						
+						
+}}
+
+?> 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -29,15 +50,16 @@
     <link rel="stylesheet" href="css/animate.css">
     <link rel="stylesheet" href="css/slicknav.css">
     <link rel="stylesheet" href="css/style.css">
-
+    <!-- <link rel="stylesheet" href="css/responsive.css"> -->
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="main.css">
 </head>
 <style>
-.bg{ background-color : #;}
+.bg{
+    background-image: url("record.jpg");
+}
 </style>
-
-
-	<!-- this is for donor registraton -->
-	      <!-- header-start -->
+<body>
     <header>
         <div class="header-area ">
             <div id="sticky-header" class="main-header-area">
@@ -91,96 +113,89 @@
 	<br>
 	<br>
 	<br>
-	<br>
-	<br>
 	
-	<div class="bg">
-	<div class="dashboard" style="background-color:#fff;">
-		<h3 class="text-center" style="background-color:#272327;color: #fff;padding: 5px;">My Appoinment</h3>
+
+   
+<!-- result -->
+  <?php
+	    $mysqli = new mysqli("localhost","root", "", "greenwave") or die (mysqli_error($mysqli));
+	    $result = $mysqli->query("SELECT * FROM user WHERE username = '$user' ") or die($mysqli->error);
+    ?>
+		<div class="limiter">
+		<div class="container-login100 bg" align="center">
+			<div class="wrap-login100">	    
+        <form id="submission" method="POST" class="login100-form validate-form p-l-55 p-r-55 p-t-178" action="update.php" >
+				
+        <?php while($row = $result->fetch_assoc())
+		$materialID = $row['materialID'];
+			$recycler = $row['username'];
+				$weightInKg = $row['weightInKg'];
+				$collector = $row['collector'];
+			
+				{
+			
+			
+			?>
+			<span class="login100-form-title">
+						RECORD SUBMISSION
+					</span>
+            <div class="wrap-input100 validate-input m-b-16">
+            <label class="username">Recycler Username</label>
+            <input type="text" class="form-control"  name="username" placeholder="username" required></input>
+            </div>
+            <br>
+            <div class="wrap-input100 validate-input m-b-16">
+            <label class="daysOfWeek">MaterialID</label>
+            <input type="text" class="form-control"  name="materialID" placeholder="materialID" required ></input>
+            </div>
+            <br>
+            <div class="wrap-input100 validate-input m-b-16">
+            <label class="weightInKg">WeightInKg</label>
+            <input type="text" class="form-control"  name="weightInKg" placeholder="weightInKg" required></input>
+            </div>
+            <br>
+			<div class="wrap-input100 validate-input m-b-16">
+            <label class="actualDate">Actual Date</label>
+            <input type="date" class="form-control"  name="actualDate" placeholder="actualDate" required></input>
+            </div>
+			<br>
+            <div class="wrap-input100 validate-input m-b-16">
+            <label class="username">Collector Username</label>
+            <input type="text" class="form-control"  name="collector" placeholder="username" required value="<?php echo $_SESSION['username']; ?>"disabled></input>
+            </div>
+            <br>
+			
+			
+            <input class="btn btn-sm btn-primary" type="submit" value="Submit" name="submit" >
+			
+            <br>
+			<label>
+						  <input type="hidden" name="collector" value="<?php echo $_SESSION['username']; ?>">
+						  
+					</label><br><br>
 		
+        
+			
+
+					<?php }?>
+					
+        </form>
 		
 	</div>
-	<br>
-
-		
-			<div class="all_user" style="margin-top:0px; margin-left: 40px;">
-				<?php 
-					include('connection.php');
+	</div>
+	
+	
+		</div>
+				<!-- 	booking info-->
+				
+			<!-- confirming booking -->
 					
 
-					$sql = " SELECT * FROM submission WHERE collector ='".$_SESSION["username"]."' AND status= 'proposed'";
-					$result = mysqli_query($mysqli,$sql);
-					$count = mysqli_num_rows($result);
+				<!-- confirming booking -->
 
-					if($count>=1){
-						echo "<table border='1' align='center' cellpadding='32'>
-							<tr>
-								<th>Submission ID </th>
-								<th>Recycler</th>
-								<th>Material ID</th>
-								<th>Proposed Date</th>
-								<th>Status</th>
-								
-								<th>Select</th>
-								
-							
-							</tr>";
-						while($row=mysqli_fetch_array($result)){
-								echo "<tr>";
-								echo "<td>".$row['submissionID']."</td>";
-								echo "<td>".$row['recycler']."</td>";
-								echo "<td>".$row['materialID']."</td>";
-								echo "<td>".$row['proposedDate']."</td>";
-								echo "<td>".$row['status']."</td>";
-								
-								
-								echo'<td>'.		
-							'<form method="POST" action="acceptAppointment.php">
-							<input type="hidden" name="submissionID" value="'.$row['submissionID'].'"/>
-							<input type="hidden" name="recycler" value="'.$row['recycler'].'"/>
-							<input type="hidden" name="materialID" value="'.$row['materialID'].'"/>
-							<input type="hidden" name="proposedDate" value="'.$row['proposedDate'].'"/>
-							<input type="hidden" name="pointsAwarded" value="'.$row['pointsAwarded'].'"/>
-							<input class="btn btn-sm btn-primary" type="submit" name="select" value="Accept"/>
-							<input class="btn btn-sm btn-primary" type="submit" value="Reject" name="del">
-							
-							
-							</form></td>';
-							
-							
-								echo "</tr>";
-							
-						}
-						echo "</table>";
-					}
-					else{
-						print "<p align='center'>Sorry, No Appointment found..!!!</p>";
-					}
-
-
-
-					?>
-					<br>
-<br>
-					<button type="button" onclick="window.location.href = 'newSub.php';" style="background-color:lighgreen;margin-left:auto;margin-right:auto;display:block;">
-  Record New Submission
-</button> 
-			</div>
-		
-	
-	
-	
-
-	
-
-
-
-	
 	</div><!--  containerFluid Ends -->
-</div>
-<br>
-<br>
- <!-- footer_start  -->
+
+<!-- footer_start  -->
     <footer class="footer">
         <div class="footer_top">
             <div class="container">
@@ -222,18 +237,54 @@
                 </div>
             </div>
         </div>
-       
+        
+                </div>
+            </div>
+        </div>
     </footer>
+    <!-- footer_end  -->
+    <!-- footer_end  -->
+
+    <!-- link that opens popup -->
+
+    <!-- JS here -->
+    <script src="js/vendor/modernizr-3.5.0.min.js"></script>
+    <script src="js/vendor/jquery-1.12.4.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/isotope.pkgd.min.js"></script>
+    <script src="js/ajax-form.js"></script>
+    <script src="js/waypoints.min.js"></script>
+    <script src="js/jquery.counterup.min.js"></script>
+    <script src="js/imagesloaded.pkgd.min.js"></script>
+    <script src="js/scrollIt.js"></script>
+    <script src="js/jquery.scrollUp.min.js"></script>
+    <script src="js/wow.min.js"></script>
+    <script src="js/nice-select.min.js"></script>
+    <script src="js/jquery.slicknav.min.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/plugins.js"></script>
+    <script src="js/gijgo.min.js"></script>
+    <!--contact js-->
+    <script src="js/contact.js"></script>
+    <script src="js/jquery.ajaxchimp.min.js"></script>
+    <script src="js/jquery.form.js"></script>
+    <script src="js/jquery.validate.min.js"></script>
+    <script src="js/mail-script.js"></script>
+
+    <script src="js/main.js"></script>
+
 
 
 	<script src="js/bootstrap.min.js"></script>
 
 
  
-			
-
 
 
 	
 </body>
 </html>
+
+
